@@ -25,26 +25,26 @@ impl From<String> for Policy {
       let mut details = line.split_whitespace();
       let range = {
         let mut raw = details
-        .next()
-        .expect("No policy range provided")
-        .split('-');
+          .next()
+          .expect("No policy range provided")
+          .split('-');
 
         Range {
           start: raw.next()
-          .expect("No min in policy range")
-          .parse::<usize>()
-          .expect("Min in range is not a number"),
+            .expect("No min in policy range")
+            .parse::<usize>()
+            .expect("Min in range is not a number"),
           end: raw.next()
-          .expect("No max in range")
-          .parse::<usize>()
-          .expect("Max in range is not a number")
+            .expect("No max in range")
+            .parse::<usize>()
+            .expect("Max in range is not a number") + 1
         }
       };
       let letter = details.next()
-      .expect("No letter in policy")
-      .chars()
-      .nth(0)
-      .expect("No letter in policy");
+        .expect("No letter in policy")
+        .chars()
+        .nth(0)
+        .expect("No letter in policy");
 
       (range, letter)
     };
@@ -61,7 +61,7 @@ pub fn part1(input: String) -> u64 {
     let (raw_policy, password) = (
       raw.next().expect("No policy provided"),
       raw.next().expect("No password provided")
-      );
+    );
     let policy = Policy::from(String::from(raw_policy));
 
     policy.validate(password.into())
@@ -76,8 +76,8 @@ mod tests {
 
   #[test]
   fn policy_parse_ok() {
-    assert_eq!(Policy::from(String::from("1-3 a")), Policy::new('a', Range { start: 1, end: 3 }));
-    assert_eq!(Policy::from(String::from("5-8 b")), Policy::new('a', Range { start: 1, end: 3 }));
+    assert_eq!(Policy::from(String::from("1-3 a")), Policy::new('a', Range { start: 1, end: 4 }));
+    assert_eq!(Policy::from(String::from("5-8 b")), Policy::new('b', Range { start: 5, end: 9 }));
   }
 
   #[test]
