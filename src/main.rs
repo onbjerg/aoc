@@ -29,6 +29,10 @@ mod day1 {
 
     for a in &numbers {
       for b in &numbers {
+        if 2020 - a < *b {
+          continue
+        }
+
         let complement = 2020 - a - b;
         if complements.contains(&complement) {
           return Some(complement * a * b);
