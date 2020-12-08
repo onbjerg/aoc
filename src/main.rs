@@ -67,7 +67,7 @@ mod day1 {
     
     #[test]
     fn part2_bigish() {
-      assert_eq!(part2("10\n979\n\n233\n366\n1234\n675\n8".into()), Some(241861950));
+      assert_eq!(part2("10\n979\n233\n366\n1234\n675\n8".into()), Some(241861950));
     }
     
     #[test]
