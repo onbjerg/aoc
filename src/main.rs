@@ -27,8 +27,8 @@ mod day1 {
       .collect();
     let mut complements = HashSet::new();
 
-    for a in numbers {
-      for b in numbers {
+    for a in &numbers {
+      for b in &numbers {
         let complement = 2020 - a - b;
         if complements.contains(&complement) {
           return Some(complement * a * b);
