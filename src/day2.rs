@@ -1,13 +1,13 @@
-use std::ops::Range;
+use std::ops::RangeInclusive;
 
 #[derive(Debug, PartialEq)]
 pub struct Policy {
   letter: char,
-  range: Range<usize>
+  range: RangeInclusive<usize>
 }
 
 impl Policy {
-  pub fn new(letter: char, range: Range<usize>) -> Self {
+  pub fn new(letter: char, range: RangeInclusive<usize>) -> Self {
     Self {
       letter,
       range
@@ -29,16 +29,16 @@ impl From<String> for Policy {
           .expect("No policy range provided")
           .split('-');
 
-        Range {
-          start: raw.next()
+        RangeInclusive::new(
+          raw.next()
             .expect("No min in policy range")
             .parse::<usize>()
             .expect("Min in range is not a number"),
-          end: raw.next()
+          raw.next()
             .expect("No max in range")
             .parse::<usize>()
-            .expect("Max in range is not a number") + 1
-        }
+            .expect("Max in range is not a number")
+        )
       };
       let letter = details.next()
         .expect("No letter in policy")
@@ -76,8 +76,8 @@ mod tests {
 
   #[test]
   fn policy_parse_ok() {
-    assert_eq!(Policy::from(String::from("1-3 a")), Policy::new('a', Range { start: 1, end: 4 }));
-    assert_eq!(Policy::from(String::from("5-8 b")), Policy::new('b', Range { start: 5, end: 9 }));
+    assert_eq!(Policy::from(String::from("1-3 a")), Policy::new('a', RangeInclusive::new(1, 3)));
+    assert_eq!(Policy::from(String::from("5-8 b")), Policy::new('b', RangeInclusive::new(5, 8)));
   }
 
   #[test]
